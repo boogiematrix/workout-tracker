@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const mongoose = require("mongoose")
 const path = require("path")
-const Workout = require("../model/workout.js");
+const Workout = require("../models/workout.js");
 
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/index.html'))
