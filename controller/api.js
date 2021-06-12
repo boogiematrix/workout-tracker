@@ -12,7 +12,7 @@ router.post("/api/workout", ({ body }, res) => {
 });
 
 router.post("/api/workout/bulk", ({ body }, res) => {
-    Transaction.insertMany(body)
+    Workout.insertMany(body)
         .then(dbWorkout => {
             res.json(dbWorkout);
         })
@@ -22,7 +22,7 @@ router.post("/api/workout/bulk", ({ body }, res) => {
 });
 
 router.get("/api/workout", (req, res) => {
-    Transaction.find({})
+    Workout.find({})
         .sort({ date: -1 })
         .then(dbWorkout => {
             res.json(dbWorkout);
