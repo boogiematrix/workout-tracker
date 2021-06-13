@@ -7,6 +7,10 @@ const workoutSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    totalDuration: {
+        type: Number,
+        default: 0,
+    },
     exercises: [{
 
         name: {
@@ -34,8 +38,16 @@ const workoutSchema = new Schema({
         distanceTraveled: {
             type: Number,
         }
-    }]
+    }],
 });
+
+workoutSchema.methods.totalTime = function () {
+    
+    for (let i = 0; i < this.exercises.length; i++){
+        this.totalDuration += this.exercises[i].duration;
+    }
+    return this.totalDuration
+}
 
 const Workout = mongoose.model("Workout", workoutSchema);
 

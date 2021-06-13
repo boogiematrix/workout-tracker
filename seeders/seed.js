@@ -10,6 +10,7 @@ mongoose.connect('mongodb://localhost/workout', {
 const workoutSeed = [
   {
     day: new Date(new Date().setDate(new Date().getDate() - 9)),
+    totalDuration: 20,
     exercises: [
       {
         type: 'resistance',
@@ -23,6 +24,7 @@ const workoutSeed = [
   },
   {
     day: new Date(new Date().setDate(new Date().getDate() - 8)),
+    totalDuration: 20,
     exercises: [
       {
         type: 'resistance',
@@ -36,6 +38,7 @@ const workoutSeed = [
   },
   {
     day: new Date(new Date().setDate(new Date().getDate() - 7)),
+    totalDuration: 25,
     exercises: [
       {
         type: 'resistance',
@@ -49,6 +52,7 @@ const workoutSeed = [
   },
   {
     day: new Date(new Date().setDate(new Date().getDate() - 6)),
+    totalDuration: 25,
     exercises: [
       {
         type: 'cardio',
@@ -60,6 +64,7 @@ const workoutSeed = [
   },
   {
     day: new Date(new Date().setDate(new Date().getDate() - 5)),
+    totalDuration: 20,
     exercises: [
       {
         type: 'resistance',
@@ -73,6 +78,7 @@ const workoutSeed = [
   },
   {
     day: new Date(new Date().setDate(new Date().getDate() - 4)),
+    totalDuration: 20,
     exercises: [
       {
         type: 'resistance',
@@ -86,6 +92,7 @@ const workoutSeed = [
   },
   {
     day: new Date(new Date().setDate(new Date().getDate() - 3)),
+    totalDuration: 30,
     exercises: [
       {
         type: 'resistance',
@@ -99,6 +106,7 @@ const workoutSeed = [
   },
   {
     day: new Date(new Date().setDate(new Date().getDate() - 2)),
+    totalDuration: 20,
     exercises: [
       {
         type: 'resistance',
@@ -112,6 +120,7 @@ const workoutSeed = [
   },
   {
     day: new Date(new Date().setDate(new Date().getDate() - 1)),
+    totalDuration: 20,
     exercises: [
       {
         type: 'resistance',
