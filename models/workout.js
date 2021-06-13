@@ -35,7 +35,7 @@ const workoutSchema = new Schema({
         duration: {
             type: Number,
         },
-        distanceTraveled: {
+        distance: {
             type: Number,
         }
     }],

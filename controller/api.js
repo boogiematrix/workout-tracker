@@ -38,12 +38,17 @@ router.get("/workouts", (req, res) => {
 });
 
 router.put("/workouts/:id", (req, res) => {
+
     Workout.update({
         _id: mongojs.ObjectId(req.params.id)
     }, {
-            $set: {
-                exercises: req.body
+            $push: {
+            exercises: req.body,
             }
+    }, {
+            $sum: {
+            totalDuration: req.body.duration
+        }
     })
         .then(dbWorkout => {
             res.json(dbWorkout);
