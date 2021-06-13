@@ -57,18 +57,24 @@ router.put("/workouts/:id", (req, res) => {
 router.get("/workouts/range", async (req, res) => {
    //return two arrays with 7 entries, each a sum for that day
     Workout.aggregate([
-       {$limit: 7},
+   
         {$unwind: "$exercises"},
         {
             $group: {
-            _id: "$day",
-            day: { $push: "$day"},
-            totalDuration: { $sum: "$exercises.duration" },
-            totalWeight: { $sum: "$exercises.weight"}
-        }
-        }, {
-        $sort: {_id: 1}
-    }])
+                _id: "$day",
+                day: { $push: { $max: "$day"}},
+                totalDuration: { $sum: "$exercises.duration" },
+                totalWeight: { $sum: "$exercises.weight"}
+            }
+        },
+        {
+            $sort: {_id: -1}
+        },
+        { $limit: 7 },
+        {
+            $sort: { _id: 1 }
+        },
+    ])
         .then(dbWorkout => {
             res.json(dbWorkout);
         })
