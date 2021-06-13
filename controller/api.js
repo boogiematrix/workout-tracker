@@ -45,10 +45,6 @@ router.put("/workouts/:id", (req, res) => {
             $push: {
             exercises: req.body,
             }
-    }, {
-            $sum: {
-            totalDuration: req.body.duration
-        }
     })
         .then(dbWorkout => {
             res.json(dbWorkout);
@@ -59,23 +55,27 @@ router.put("/workouts/:id", (req, res) => {
 });
 
 router.get("/workouts/range", async (req, res) => {
-    try {
-
-        let range = await Workout.aggregate([
-            {
-                $addFields: {
-                    totalduration: { $sum: "$exercises.duration" },
-                    totalWeight: { $sum: "$exercises.weight" }
-                }
-            },
-            
-        ]).
-            res.json(range);
-        
-    } catch {
-        err => {
+   //return two arrays with 7 entries, each a sum for that day
+    Workout.aggregate([
+       {$limit: 7},
+        {$unwind: "$exercises"},
+        {
+            $group: {
+            _id: "$day",
+            day: { $push: "$day"},
+            totalDuration: { $sum: "$exercises.duration" },
+            totalWeight: { $sum: "$exercises.weight"}
+        }
+        }, {
+        $sort: {_id: 1}
+    }])
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            console.log(err)
             res.status(400).json(err);
-        }};
+        });
 })
 
 module.exports = router;
