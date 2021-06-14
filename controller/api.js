@@ -2,7 +2,7 @@ const router = require("express").Router();
 const mongoose = require("mongoose")
 const Workout = require("../models/workout.js");
 const mongojs = require('mongojs')
-
+//route for creating a new workout
 router.post("/workouts", ({ body }, res) => {
     const workout = new Workout(body);
     workout.totalTime();
@@ -15,7 +15,7 @@ router.post("/workouts", ({ body }, res) => {
             res.status(400).json(err);
         });
 });
-
+//route for adding many workouts
 router.post("/workouts/bulk", ({ body }, res) => {
     Workout.insertMany(body)
         .then(dbWorkout => {
@@ -25,10 +25,10 @@ router.post("/workouts/bulk", ({ body }, res) => {
             res.status(400).json(err);
         });
 });
-
+//route for getting all workouts
 router.get("/workouts", (req, res) => {
     Workout.find({})
-        //.sort({ date: -1 })
+        .sort({ day: 1 })
         .then(dbWorkout => {
             res.json(dbWorkout);
         })
@@ -36,9 +36,8 @@ router.get("/workouts", (req, res) => {
             res.status(400).json(err);
         });
 });
-
+//route for adding an exercise to a workout
 router.put("/workouts/:id", (req, res) => {
-
     Workout.updateOne({
         _id: mongojs.ObjectId(req.params.id)
     }, {
@@ -53,12 +52,13 @@ router.put("/workouts/:id", (req, res) => {
             res.status(400).json(err);
         });
 });
-
+//route for the dashboard graphs
 router.get("/workouts/range", async (req, res) => {
    //return two arrays with 7 entries, each a sum for that day
     Workout.aggregate([
-   
-        {$unwind: "$exercises"},
+    //allows access to nested values
+        { $unwind: "$exercises" },
+    //creates an object to fit the provided front end code
         {
             $group: {
                 _id: "$day",
@@ -68,6 +68,7 @@ router.get("/workouts/range", async (req, res) => {
             }
         },
         {
+    //this is a workaround to get the most recent 7 workouts. i'm sure there's a better way
             $sort: {_id: -1}
         },
         { $limit: 7 },
