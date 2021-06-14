@@ -39,7 +39,7 @@ router.get("/workouts", (req, res) => {
 
 router.put("/workouts/:id", (req, res) => {
 
-    Workout.update({
+    Workout.updateOne({
         _id: mongojs.ObjectId(req.params.id)
     }, {
             $push: {
