@@ -6,7 +6,7 @@
 
   ![Sample](https://github.com/boogiematrix/workout-tracker/blob/main/public/images/workout-tracker-screenshot.png)
 
-  [Deployed Application]()
+  [Deployed Application](https://blooming-scrubland-28026.herokuapp.com/)
   
   ## Questions
   Feel free to contact me with any questions
